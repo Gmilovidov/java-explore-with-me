@@ -12,6 +12,22 @@
 
 	<name>Explore With Me</name>
 
+	<modules>
+		<module>ewm_service</module>
+		<module>ewm_stats</module>
+	</modules>
+	<dependencies>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-autoconfigure</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+			<scope>provided</scope>
+		</dependency>
+	</dependencies>
+
 	<groupId>ru.practicum</groupId>
 	<artifactId>explore-with-me</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
@@ -53,11 +69,18 @@
 						</execution>
 					</executions>
 					<dependencies>
+
+						<dependency>
+							<groupId>org.springframework.boot</groupId>
+							<artifactId>spring-boot-starter-actuator</artifactId>
+						</dependency>
+
 						<dependency>
 							<groupId>com.puppycrawl.tools</groupId>
 							<artifactId>checkstyle</artifactId>
 							<version>10.3</version>
 						</dependency>
+
 					</dependencies>
 				</plugin>
 				<plugin>
