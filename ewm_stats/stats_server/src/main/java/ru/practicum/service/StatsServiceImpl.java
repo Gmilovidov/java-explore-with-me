@@ -4,26 +4,30 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.practicum.EndpointHit;
 import ru.practicum.ViewStats;
+import ru.practicum.exceptions.InvalidRequestException;
 import ru.practicum.mapper.StatsMapper;
 import ru.practicum.repository.StatsRepository;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
-@RequiredArgsConstructor
 @Service
+@RequiredArgsConstructor
 public class StatsServiceImpl implements StatsService {
-
     private final StatsRepository statsRepository;
-    private final StatsMapper statsMapper;
+
 
     @Override
     public EndpointHit create(EndpointHit endpointHit) {
-        return statsMapper.statToHit(statsRepository.save(statsMapper.hitToStat(endpointHit)));
+        return StatsMapper.mapToHit(statsRepository.save(StatsMapper.mapToStat(endpointHit)));
     }
 
     @Override
     public List<ViewStats> getStats(LocalDateTime start, LocalDateTime end, List<String> uris, Boolean unique) {
+        if (start.isAfter(end)) {
+            throw new InvalidRequestException("Некорректно заданы даты");
+        }
+
         List<ViewStats> stats;
         if (uris == null && !unique) {
             stats = statsRepository.getAllStats(start, end);

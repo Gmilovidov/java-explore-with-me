@@ -1,13 +1,33 @@
 package ru.practicum.mapper;
 
-import org.mapstruct.Mapper;
+
+import lombok.experimental.UtilityClass;
+import ru.practicum.Constants;
 import ru.practicum.EndpointHit;
 import ru.practicum.model.Stat;
 
-@Mapper(componentModel = "spring")
-public interface StatsMapper {
+import java.time.LocalDateTime;
 
-    Stat hitToStat(EndpointHit endpointHit);
+@UtilityClass
+public class StatsMapper {
 
-    EndpointHit statToHit(Stat stat);
+    public Stat mapToStat(EndpointHit endpointHit) {
+        return Stat.builder()
+                .id(endpointHit.getId())
+                .app(endpointHit.getApp())
+                .ip(endpointHit.getIp())
+                .uri(endpointHit.getUri())
+                .timestamp(LocalDateTime.parse(endpointHit.getTimestamp(), Constants.FORMATTER))
+                .build();
+    }
+
+    public EndpointHit mapToHit(Stat stat) {
+        return EndpointHit.builder()
+                .id(stat.getId())
+                .app(stat.getApp())
+                .ip(stat.getIp())
+                .uri(stat.getUri())
+                .timestamp(stat.getTimestamp().toString())
+                .build();
+    }
 }
