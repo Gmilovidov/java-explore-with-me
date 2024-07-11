@@ -20,9 +20,8 @@ public class StatController {
     private final StatService statService;
 
     @PostMapping("/hit")
-    @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<EndpointHit> create(@RequestBody EndpointHit endpointHit) {
-        return ResponseEntity.ok().body(statService.create(endpointHit));
+        return new ResponseEntity<>(statService.create(endpointHit), HttpStatus.CREATED);
     }
 
     @GetMapping("/stats")
