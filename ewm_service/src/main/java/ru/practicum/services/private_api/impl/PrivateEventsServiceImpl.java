@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 import ru.practicum.dto.event.EventFullDto;
 import ru.practicum.dto.event.EventShortDto;
 import ru.practicum.dto.event.NewEventDto;
-import ru.practicum.dto.event.UpdateEventUserRequest;
+import ru.practicum.dto.event.UpdateEventUserRequestDto;
 import ru.practicum.dto.request.EventRequestStatusUpdateRequest;
 import ru.practicum.dto.request.EventRequestStatusUpdateResult;
 import ru.practicum.dto.request.ParticipationRequestDto;
@@ -64,10 +64,10 @@ public class PrivateEventsServiceImpl implements PrivateEventsService {
     }
 
     @Override
-    public EventFullDto updateEvent(Long initiatorId, Long eventId, UpdateEventUserRequest updateEventUserRequest) {
+    public EventFullDto updateEvent(Long initiatorId, Long eventId, UpdateEventUserRequestDto updateEventUserRequestDto) {
         findUserById(initiatorId);
         Event eventToUpdate = findEventById(eventId);
-        LocalDateTime newEventDate = updateEventUserRequest.getEventDate();
+        LocalDateTime newEventDate = updateEventUserRequestDto.getEventDate();
 
         if (newEventDate != null) {
             checkDate(newEventDate);
@@ -78,15 +78,15 @@ public class PrivateEventsServiceImpl implements PrivateEventsService {
                     + "события или события в состоянии ожидания модерации");
         }
 
-        if (updateEventUserRequest.getStateAction() != null) {
-            if (updateEventUserRequest.getStateAction().equals(UserStateAction.CANCEL_REVIEW)) {
+        if (updateEventUserRequestDto.getStateAction() != null) {
+            if (updateEventUserRequestDto.getStateAction().equals(UserStateAction.CANCEL_REVIEW)) {
                 eventToUpdate.setState(State.CANCELED);
             } else {
                 eventToUpdate.setState(State.PENDING);
             }
         }
 
-        UtilsUpdateWithoutNull.copyProperties(updateEventUserRequest, eventToUpdate);
+        UtilsUpdateWithoutNull.copyProperties(updateEventUserRequestDto, eventToUpdate);
 
         return EventMapper.mapToEventFullDto(eventRepository.save(eventToUpdate));
     }

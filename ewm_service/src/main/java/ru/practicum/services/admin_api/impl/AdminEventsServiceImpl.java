@@ -4,7 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import ru.practicum.dto.event.EventFullDto;
-import ru.practicum.dto.event.UpdateEventAdminRequest;
+import ru.practicum.dto.event.UpdateEventAdminRequestDto;
 import ru.practicum.exceptions.DataNotFoundException;
 import ru.practicum.exceptions.InvalidRequestException;
 import ru.practicum.exceptions.WrongConditionException;
@@ -49,10 +49,10 @@ public class AdminEventsServiceImpl implements AdminEventsService {
     }
 
     @Override
-    public EventFullDto updateEvent(Long eventId, UpdateEventAdminRequest updateEventAdminRequest) {
+    public EventFullDto updateEvent(Long eventId, UpdateEventAdminRequestDto updateEventAdminRequestDto) {
         Event eventToUpdate = eventRepository.findById(eventId)
                 .orElseThrow(() -> new DataNotFoundException("Событие с id=" + eventId + " не найдено."));
-        LocalDateTime newEventDate = updateEventAdminRequest.getEventDate();
+        LocalDateTime newEventDate = updateEventAdminRequestDto.getEventDate();
 
         if (newEventDate != null) {
             if (newEventDate.isBefore(LocalDateTime.now())) {
@@ -66,13 +66,13 @@ public class AdminEventsServiceImpl implements AdminEventsService {
             }
         }
 
-        if (updateEventAdminRequest.getStateAction() != null) {
+        if (updateEventAdminRequestDto.getStateAction() != null) {
             if (eventToUpdate.getState() != State.PENDING) {
                 throw new WrongConditionException("Событие можно публиковать, только если оно в состоянии ожидания публикации. " +
                         "Текущий статус :" + eventToUpdate.getState());
             }
 
-            if (updateEventAdminRequest.getStateAction() == AdminStateAction.PUBLISH_EVENT) {
+            if (updateEventAdminRequestDto.getStateAction() == AdminStateAction.PUBLISH_EVENT) {
                 eventToUpdate.setState(State.PUBLISHED);
                 eventToUpdate.setPublishedOn(LocalDateTime.now());
             } else {
@@ -80,12 +80,12 @@ public class AdminEventsServiceImpl implements AdminEventsService {
             }
         }
 
-        if (updateEventAdminRequest.getLocation() != null) {
-            Location location = locationRepository.save(updateEventAdminRequest.getLocation());
+        if (updateEventAdminRequestDto.getLocation() != null) {
+            Location location = locationRepository.save(updateEventAdminRequestDto.getLocation());
             eventToUpdate.setLocation(location);
         }
 
-        UtilsUpdateWithoutNull.copyProperties(updateEventAdminRequest, eventToUpdate);
+        UtilsUpdateWithoutNull.copyProperties(updateEventAdminRequestDto, eventToUpdate);
 
         return EventMapper.mapToEventFullDto(eventRepository.save(eventToUpdate));
     }
