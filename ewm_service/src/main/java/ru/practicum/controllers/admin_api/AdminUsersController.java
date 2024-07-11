@@ -32,11 +32,10 @@ public class AdminUsersController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<UserDto> create(@Valid @RequestBody NewUserRequest newUserRequest) {
-        return ResponseEntity.ok().body(adminUsersService.create(newUserRequest));
+        return new ResponseEntity<>(adminUsersService.create(newUserRequest), HttpStatus.CREATED);
     }
 
     @DeleteMapping("/{userId}")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
     public ResponseEntity<Void> delete(@PathVariable Long userId) {
         adminUsersService.delete(userId);
         return ResponseEntity.noContent().build();

@@ -17,13 +17,11 @@ public class AdminCategoriesController {
     private final AdminCategoriesService adminCategoriesService;
 
     @PostMapping
-    @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<CategoryDto> create(@Valid @RequestBody NewCategoryDto newCategoryDto) {
-        return ResponseEntity.ok().body(adminCategoriesService.create(newCategoryDto));
+        return new ResponseEntity<>(adminCategoriesService.create(newCategoryDto), HttpStatus.CREATED);
     }
 
     @DeleteMapping("{catId}")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
     public ResponseEntity<Void> delete(@PathVariable Long catId) {
         adminCategoriesService.delete(catId);
         return ResponseEntity.noContent().build();
