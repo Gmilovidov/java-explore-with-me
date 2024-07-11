@@ -35,10 +35,9 @@ public class PrivateEventsController {
     }
 
     @PostMapping
-    @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<EventFullDto> createEvent(@PathVariable Long userId,
                                     @Valid @RequestBody NewEventDto newEventDto) {
-        return ResponseEntity.ok().body(privateEventsService.createEvent(userId, newEventDto));
+        return new ResponseEntity<>(privateEventsService.createEvent(userId, newEventDto), HttpStatus.CREATED);
     }
 
     @GetMapping("/{eventId}")
