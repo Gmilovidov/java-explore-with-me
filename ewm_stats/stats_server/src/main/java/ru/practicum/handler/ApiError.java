@@ -1,11 +1,11 @@
 package ru.practicum.handler;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
 import org.springframework.http.HttpStatus;
 
-@Getter
-@Setter
-@EqualsAndHashCode
+@Data
 @Builder
 @AllArgsConstructor
 public class ApiError {

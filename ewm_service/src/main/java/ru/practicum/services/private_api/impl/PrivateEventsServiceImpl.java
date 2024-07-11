@@ -38,7 +38,7 @@ public class PrivateEventsServiceImpl implements PrivateEventsService {
     private final CategoryRepository categoryRepository;
 
     @Override
-    public List<EventShortDto> getUserEvents(Long initiatorId, Pageable pageable) {
+    public List<EventShortDto> getUserEvets(Long initiatorId, Pageable pageable) {
         findUserById(initiatorId);
         return eventRepository.findAllByInitiator_Id(initiatorId, pageable).stream()
                 .map(EventMapper::mapToEventShortDto)
