@@ -22,14 +22,13 @@ public class PrivateRequestsController {
     }
 
     @PostMapping
-    @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<ParticipationRequestDto> create(@PathVariable Long userId,
                                           @RequestParam(required = false) Long eventId) {
         if (eventId == null) {
             throw new InvalidRequestException("необходим параметр eventId");
         }
 
-        return ResponseEntity.ok().body(privateRequestsService.create(userId, eventId));
+        return new ResponseEntity<>(privateRequestsService.create(userId, eventId), HttpStatus.CREATED);
     }
 
     @PatchMapping("/{requestId}/cancel")
