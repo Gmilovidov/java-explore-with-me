@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.practicum.Constants;
 import ru.practicum.dto.event.EventFullDto;
@@ -24,31 +25,31 @@ public class AdminEventsController {
     private final AdminEventsService adminEventsService;
 
     @GetMapping
-    public List<EventFullDto> getEvents(@RequestParam(required = false) List<Long> initiators,
-                                        @RequestParam(required = false) List<State> states,
-                                        @RequestParam(required = false) List<Long> categories,
-                                        @RequestParam(required = false)
+    public ResponseEntity<List<EventFullDto>> getEvents(@RequestParam(required = false) List<Long> initiators,
+                                                       @RequestParam(required = false) List<State> states,
+                                                       @RequestParam(required = false) List<Long> categories,
+                                                       @RequestParam(required = false)
                                         @DateTimeFormat(pattern = Constants.pattern)
                                         LocalDateTime rangeStart,
-                                        @RequestParam(required = false)
+                                                       @RequestParam(required = false)
                                         @DateTimeFormat(pattern = Constants.pattern)
                                         LocalDateTime rangeEnd,
-                                        @RequestParam(defaultValue = "0") @Min(0) Integer from,
-                                        @RequestParam(defaultValue = "10") @Min(1) Integer size) {
+                                                       @RequestParam(defaultValue = "0") @Min(0) Integer from,
+                                                       @RequestParam(defaultValue = "10") @Min(1) Integer size) {
         Pageable pageable = PageRequest.of(from / size, size);
 
-        return adminEventsService.getEvents(AdminEventsParams.builder()
+        return ResponseEntity.ok().body(adminEventsService.getEvents(AdminEventsParams.builder()
                 .initiators(initiators)
                 .states(states)
                 .categories(categories)
                 .rangeStart(rangeStart)
                 .rangeEnd(rangeEnd)
-                .build(), pageable);
+                .build(), pageable));
     }
 
     @PatchMapping("/{eventId}")
-    public EventFullDto updateEvent(@PathVariable Long eventId,
+    public ResponseEntity<EventFullDto> updateEvent(@PathVariable Long eventId,
                                     @Valid @RequestBody UpdateEventAdminRequest updateEventAdminRequest) {
-        return adminEventsService.updateEvent(eventId, updateEventAdminRequest);
+        return ResponseEntity.ok().body(adminEventsService.updateEvent(eventId, updateEventAdminRequest));
     }
 }

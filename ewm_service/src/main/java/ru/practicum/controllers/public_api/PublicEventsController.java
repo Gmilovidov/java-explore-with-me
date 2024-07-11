@@ -2,6 +2,7 @@ package ru.practicum.controllers.public_api;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.practicum.Constants;
 import ru.practicum.dto.event.EventFullDto;
@@ -21,20 +22,20 @@ public class PublicEventsController {
     private final PublicEventsService publicEventsService;
 
     @GetMapping
-    public List<EventShortDto> getEvents(@RequestParam(required = false) String text,
-                                         @RequestParam(required = false) List<Long> categories,
-                                         @RequestParam(required = false) Boolean paid,
-                                         @RequestParam(required = false)
+    public ResponseEntity<List<EventShortDto>> getEvents(@RequestParam(required = false) String text,
+                                                        @RequestParam(required = false) List<Long> categories,
+                                                        @RequestParam(required = false) Boolean paid,
+                                                        @RequestParam(required = false)
                                              @DateTimeFormat(pattern = Constants.pattern) LocalDateTime rangeStart,
-                                         @RequestParam(required = false)
+                                                        @RequestParam(required = false)
                                              @DateTimeFormat(pattern = Constants.pattern)
                                              LocalDateTime rangeEnd,
-                                         @RequestParam(defaultValue = "false") Boolean onlyAvailable,
-                                         @RequestParam(required = false) String sort,
-                                         @RequestParam(defaultValue = "0") @Min(0) Integer from,
-                                         @RequestParam(defaultValue = "10") @Min(1) Integer size,
-                                         HttpServletRequest request) {
-        return publicEventsService.getEvents(UserEventsParams.builder()
+                                                        @RequestParam(defaultValue = "false") Boolean onlyAvailable,
+                                                        @RequestParam(required = false) String sort,
+                                                        @RequestParam(defaultValue = "0") @Min(0) Integer from,
+                                                        @RequestParam(defaultValue = "10") @Min(1) Integer size,
+                                                        HttpServletRequest request) {
+        return ResponseEntity.ok().body(publicEventsService.getEvents(UserEventsParams.builder()
                 .text(text)
                 .categories(categories)
                 .paid(paid)
@@ -43,11 +44,11 @@ public class PublicEventsController {
                 .onlyAvailable(onlyAvailable)
                 .sort(sort)
                 .request(request)
-                .build(), from, size);
+                .build(), from, size));
     }
 
     @GetMapping("/{id}")
-    public EventFullDto getEventById(@PathVariable Long id, HttpServletRequest request) {
-        return publicEventsService.getEventById(id, request);
+    public ResponseEntity<EventFullDto> getEventById(@PathVariable Long id, HttpServletRequest request) {
+        return ResponseEntity.ok().body(publicEventsService.getEventById(id, request));
     }
 }

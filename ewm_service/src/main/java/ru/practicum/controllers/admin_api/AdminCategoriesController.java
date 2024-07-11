@@ -2,6 +2,7 @@ package ru.practicum.controllers.admin_api;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.practicum.dto.category.CategoryDto;
 import ru.practicum.dto.category.NewCategoryDto;
@@ -17,19 +18,20 @@ public class AdminCategoriesController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public CategoryDto create(@Valid @RequestBody NewCategoryDto newCategoryDto) {
-        return adminCategoriesService.create(newCategoryDto);
+    public ResponseEntity<CategoryDto> create(@Valid @RequestBody NewCategoryDto newCategoryDto) {
+        return ResponseEntity.ok().body(adminCategoriesService.create(newCategoryDto));
     }
 
     @DeleteMapping("{catId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void delete(@PathVariable Long catId) {
+    public ResponseEntity<Void> delete(@PathVariable Long catId) {
         adminCategoriesService.delete(catId);
+        return ResponseEntity.noContent().build();
     }
 
     @PatchMapping("{catId}")
-    public CategoryDto update(@PathVariable Long catId,
+    public ResponseEntity<CategoryDto> update(@PathVariable Long catId,
                               @Valid @RequestBody CategoryDto categoryDto) {
-        return adminCategoriesService.update(catId, categoryDto);
+        return ResponseEntity.ok().body(adminCategoriesService.update(catId, categoryDto));
     }
 }
