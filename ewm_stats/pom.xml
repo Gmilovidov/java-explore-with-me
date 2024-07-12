@@ -13,8 +13,8 @@
     <packaging>pom</packaging>
 
     <modules>
-        <module>stats_client</module>
         <module>stats_server</module>
+        <module>stats_client</module>
         <module>stats_dto</module>
     </modules>
 
@@ -28,6 +28,11 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-actuator</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
     </dependencies>
 </project>
