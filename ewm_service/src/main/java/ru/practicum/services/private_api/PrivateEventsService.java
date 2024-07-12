@@ -1,7 +1,7 @@
 package ru.practicum.services.private_api;
 
 import org.springframework.data.domain.Pageable;
-import ru.practicum.dto.event.EventFullDto;
+import ru.practicum.dto.event.EventDtoOut;
 import ru.practicum.dto.event.EventShortDto;
 import ru.practicum.dto.event.NewEventDto;
 import ru.practicum.dto.event.UpdateEventUserRequestDto;
@@ -14,11 +14,11 @@ import java.util.List;
 public interface PrivateEventsService {
     List<EventShortDto> getUserEvets(Long initiatorId, Pageable pageable);
 
-    EventFullDto createEvent(Long initiatorId, NewEventDto newEventDto);
+    EventDtoOut createEvent(Long initiatorId, NewEventDto newEventDto);
 
-    EventFullDto getEventById(Long initiatorId, Long eventId);
+    EventDtoOut getEventById(Long initiatorId, Long eventId);
 
-    EventFullDto updateEvent(Long initiatorId, Long eventId, UpdateEventUserRequestDto updateEventUserRequestDto);
+    EventDtoOut updateEvent(Long initiatorId, Long eventId, UpdateEventUserRequestDto updateEventUserRequestDto);
 
     List<ParticipationRequestDto> getEventRequests(Long initiatorId, Long eventId);
 

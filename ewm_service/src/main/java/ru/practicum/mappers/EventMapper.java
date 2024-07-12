@@ -1,7 +1,7 @@
 package ru.practicum.mappers;
 
 import lombok.experimental.UtilityClass;
-import ru.practicum.dto.event.EventFullDto;
+import ru.practicum.dto.event.EventDtoOut;
 import ru.practicum.dto.event.EventShortDto;
 import ru.practicum.dto.event.NewEventDto;
 import ru.practicum.models.Category;
@@ -49,8 +49,8 @@ public class EventMapper {
                 .build();
     }
 
-    public EventFullDto mapToEventFullDto(Event event) {
-        return EventFullDto.builder()
+    public EventDtoOut mapToEventFullDto(Event event) {
+        return EventDtoOut.builder()
                 .id(event.getId())
                 .annotation(event.getAnnotation())
                 .description(event.getDescription())

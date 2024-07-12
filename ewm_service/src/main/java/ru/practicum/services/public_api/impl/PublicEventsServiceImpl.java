@@ -9,7 +9,7 @@ import ru.practicum.Constants;
 import ru.practicum.EndpointHit;
 import ru.practicum.StatsClient;
 import ru.practicum.ViewStats;
-import ru.practicum.dto.event.EventFullDto;
+import ru.practicum.dto.event.EventDtoOut;
 import ru.practicum.dto.event.EventShortDto;
 import ru.practicum.exceptions.DataNotFoundException;
 import ru.practicum.exceptions.InvalidRequestException;
@@ -80,7 +80,7 @@ public class PublicEventsServiceImpl implements PublicEventsService {
     }
 
     @Override
-    public EventFullDto getEventById(Long id, HttpServletRequest request) {
+    public EventDtoOut getEventById(Long id, HttpServletRequest request) {
         Event event = eventRepository.findById(id)
                 .orElseThrow(() -> new DataNotFoundException("Событие с id=" + id + " не найдено."));
 

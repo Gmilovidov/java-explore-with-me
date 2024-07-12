@@ -3,7 +3,7 @@ package ru.practicum.services.admin_api.impl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import ru.practicum.dto.event.EventFullDto;
+import ru.practicum.dto.event.EventDtoOut;
 import ru.practicum.dto.event.UpdateEventAdminRequestDto;
 import ru.practicum.exceptions.DataNotFoundException;
 import ru.practicum.exceptions.InvalidRequestException;
@@ -31,8 +31,8 @@ public class AdminEventsServiceImpl implements AdminEventsService {
     private final LocationRepository locationRepository;
 
     @Override
-    public List<EventFullDto> getEvents(AdminEventsParams adminEventsParams,
-                                        Pageable pageable) {
+    public List<EventDtoOut> getEvents(AdminEventsParams adminEventsParams,
+                                       Pageable pageable) {
 
         List<Event> events = eventRepository.getEventsByParameters(adminEventsParams.getInitiators(),
                 adminEventsParams.getStates(),
@@ -49,7 +49,7 @@ public class AdminEventsServiceImpl implements AdminEventsService {
     }
 
     @Override
-    public EventFullDto updateEvent(Long eventId, UpdateEventAdminRequestDto updateEventAdminRequestDto) {
+    public EventDtoOut updateEvent(Long eventId, UpdateEventAdminRequestDto updateEventAdminRequestDto) {
         Event eventToUpdate = eventRepository.findById(eventId)
                 .orElseThrow(() -> new DataNotFoundException("Событие с id=" + eventId + " не найдено."));
         LocalDateTime newEventDate = updateEventAdminRequestDto.getEventDate();

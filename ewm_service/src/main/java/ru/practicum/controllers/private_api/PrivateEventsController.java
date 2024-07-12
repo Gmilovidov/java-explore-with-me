@@ -6,7 +6,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import ru.practicum.dto.event.EventFullDto;
+import ru.practicum.dto.event.EventDtoOut;
 import ru.practicum.dto.event.EventShortDto;
 import ru.practicum.dto.event.NewEventDto;
 import ru.practicum.dto.event.UpdateEventUserRequestDto;
@@ -35,21 +35,21 @@ public class PrivateEventsController {
     }
 
     @PostMapping
-    public ResponseEntity<EventFullDto> createEvent(@PathVariable Long userId,
-                                    @Valid @RequestBody NewEventDto newEventDto) {
+    public ResponseEntity<EventDtoOut> createEvent(@PathVariable Long userId,
+                                                   @Valid @RequestBody NewEventDto newEventDto) {
         return new ResponseEntity<>(privateEventsService.createEvent(userId, newEventDto), HttpStatus.CREATED);
     }
 
     @GetMapping("/{eventId}")
-    public ResponseEntity<EventFullDto> getEventById(@PathVariable Long userId,
-                                     @PathVariable Long eventId) {
+    public ResponseEntity<EventDtoOut> getEventById(@PathVariable Long userId,
+                                                    @PathVariable Long eventId) {
         return ResponseEntity.ok().body(privateEventsService.getEventById(userId, eventId));
     }
 
     @PatchMapping("/{eventId}")
-    public ResponseEntity<EventFullDto> updateEvent(@PathVariable Long userId,
-                                    @PathVariable Long eventId,
-                                    @Valid @RequestBody UpdateEventUserRequestDto updateEventUserRequestDto) {
+    public ResponseEntity<EventDtoOut> updateEvent(@PathVariable Long userId,
+                                                   @PathVariable Long eventId,
+                                                   @Valid @RequestBody UpdateEventUserRequestDto updateEventUserRequestDto) {
         return ResponseEntity.ok().body(privateEventsService.updateEvent(userId, eventId, updateEventUserRequestDto));
     }
 

@@ -3,7 +3,7 @@ package ru.practicum.services.private_api.impl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import ru.practicum.dto.event.EventFullDto;
+import ru.practicum.dto.event.EventDtoOut;
 import ru.practicum.dto.event.EventShortDto;
 import ru.practicum.dto.event.NewEventDto;
 import ru.practicum.dto.event.UpdateEventUserRequestDto;
@@ -46,7 +46,7 @@ public class PrivateEventsServiceImpl implements PrivateEventsService {
     }
 
     @Override
-    public EventFullDto createEvent(Long initiatorId, NewEventDto newEventDto) {
+    public EventDtoOut createEvent(Long initiatorId, NewEventDto newEventDto) {
         LocalDateTime eventDate = newEventDto.getEventDate();
         checkDate(eventDate);
         User initiator = findUserById(initiatorId);
@@ -58,13 +58,13 @@ public class PrivateEventsServiceImpl implements PrivateEventsService {
     }
 
     @Override
-    public EventFullDto getEventById(Long initiatorId, Long eventId) {
+    public EventDtoOut getEventById(Long initiatorId, Long eventId) {
         findUserById(initiatorId);
         return EventMapper.mapToEventFullDto(findEventById(eventId));
     }
 
     @Override
-    public EventFullDto updateEvent(Long initiatorId, Long eventId, UpdateEventUserRequestDto updateEventUserRequestDto) {
+    public EventDtoOut updateEvent(Long initiatorId, Long eventId, UpdateEventUserRequestDto updateEventUserRequestDto) {
         findUserById(initiatorId);
         Event eventToUpdate = findEventById(eventId);
         LocalDateTime newEventDate = updateEventUserRequestDto.getEventDate();

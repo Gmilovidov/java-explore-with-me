@@ -5,7 +5,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.practicum.Constants;
-import ru.practicum.dto.event.EventFullDto;
+import ru.practicum.dto.event.EventDtoOut;
 import ru.practicum.dto.event.EventShortDto;
 import ru.practicum.models.UserEventsParams;
 import ru.practicum.services.public_api.PublicEventsService;
@@ -48,7 +48,7 @@ public class PublicEventsController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<EventFullDto> getEventById(@PathVariable Long id, HttpServletRequest request) {
+    public ResponseEntity<EventDtoOut> getEventById(@PathVariable Long id, HttpServletRequest request) {
         return ResponseEntity.ok().body(publicEventsService.getEventById(id, request));
     }
 }
