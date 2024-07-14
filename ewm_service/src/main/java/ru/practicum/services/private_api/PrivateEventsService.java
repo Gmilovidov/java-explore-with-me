@@ -12,7 +12,7 @@ import ru.practicum.dto.request.ParticipationRequestDto;
 import java.util.List;
 
 public interface PrivateEventsService {
-    List<EventShortDto> getUserEvets(Long initiatorId, Pageable pageable);
+    List<EventShortDto> getUserEvents(Long initiatorId, Pageable pageable);
 
     EventDtoOut createEvent(Long initiatorId, NewEventDto newEventDto);
 

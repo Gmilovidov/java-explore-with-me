@@ -53,7 +53,7 @@ public class PrivateRequestsServiceImpl implements PrivateRequestsService {
 
         Event event = findEventById(eventId);
 
-        if (!event.getState().equals(State.PUBLISHED)) {
+        if (event.getState() != State.PUBLISHED) {
             throw new WrongConditionException("нельзя участвовать в неопубликованном событии");
         }
 

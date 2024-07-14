@@ -1,20 +1,17 @@
-package ru.practicum.dto.category;
+package ru.practicum.dto.comment;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
-import javax.validation.constraints.Size;
+import ru.practicum.models.enums.CommentAdminStateAction;
 
 @Getter
 @Setter
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class CategoryDto {
-    private Long id;
-    @Size(min = 1, max = 50)
-    private String name;
+public class CommentUpdateRequest {
+    private CommentAdminStateAction stateAction;
 }
