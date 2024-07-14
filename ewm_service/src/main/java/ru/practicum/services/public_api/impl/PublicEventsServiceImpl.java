@@ -29,7 +29,7 @@ import java.util.stream.Collectors;
 @Service
 @RequiredArgsConstructor
 public class PublicEventsServiceImpl implements PublicEventsService {
-    private static final LocalDateTime PAST = LocalDateTime.now().minusYears(300);
+    private static final LocalDateTime START_COUNTING_TIME = LocalDateTime.now().minusYears(300);
 
     private final EventRepository eventRepository;
     private final StatsClient statsClient;
@@ -84,7 +84,7 @@ public class PublicEventsServiceImpl implements PublicEventsService {
         Event event = eventRepository.findById(id)
                 .orElseThrow(() -> new DataNotFoundException("Событие с id=" + id + " не найдено."));
 
-        if (!event.getState().equals(State.PUBLISHED)) {
+        if (event.getState() != State.PUBLISHED) {
             throw new DataNotFoundException("Событие должно быть опубликовано");
         }
 
@@ -103,7 +103,7 @@ public class PublicEventsServiceImpl implements PublicEventsService {
 
     private Long countViews(HttpServletRequest request) {
         List<ViewStats> stats = statsClient.readAll(
-                PAST,
+                START_COUNTING_TIME,
                 LocalDateTime.now().plusHours(1),
                 List.of(request.getRequestURI()),
                 true);
