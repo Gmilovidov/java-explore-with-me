@@ -31,7 +31,7 @@ public class PrivateEventsController {
                                                             @RequestParam(defaultValue = "10") @Min(1) Integer size) {
         Pageable pageable = PageRequest.of(from / size, size);
 
-        return ResponseEntity.ok().body(privateEventsService.getUserEvets(userId, pageable));
+        return ResponseEntity.ok().body(privateEventsService.getUserEvents(userId, pageable));
     }
 
     @PostMapping
