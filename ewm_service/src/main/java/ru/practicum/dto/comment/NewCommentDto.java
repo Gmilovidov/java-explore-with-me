@@ -1,4 +1,4 @@
-package ru.practicum.dto.category;
+package ru.practicum.dto.comment;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -14,9 +14,8 @@ import javax.validation.constraints.Size;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class NewCategoryDto {
-    @Size(min = 1)
-    @Size(max = 50)
-    @NotBlank(message = "Имя категории не может быть пустым")
-    private String name;
+public class NewCommentDto {
+    @Size(max = 2000)
+    @NotBlank(message = "нельзя оставить пустой комментарий")
+    private String text;
 }

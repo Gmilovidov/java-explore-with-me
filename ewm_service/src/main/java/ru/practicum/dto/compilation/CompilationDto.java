@@ -1,6 +1,10 @@
 package ru.practicum.dto.compilation;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import ru.practicum.dto.event.EventShortDto;
 
 import java.util.List;
