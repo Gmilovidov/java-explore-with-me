@@ -30,8 +30,8 @@ public class CommentMapper {
                 .createdOn(comment.getCreatedOn())
                 .updatedOn(comment.getUpdatedOn())
                 .publishedOn(comment.getPublishedOn())
-                .author(comment.getAuthor())
-                .event(comment.getEvent())
+                .authorId(comment.getAuthor().getId())
+                .eventId(comment.getEvent().getId())
                 .state(comment.getState())
                 .build();
     }
