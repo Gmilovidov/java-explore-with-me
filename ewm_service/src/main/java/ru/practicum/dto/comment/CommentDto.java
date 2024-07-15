@@ -5,7 +5,6 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import ru.practicum.models.Event;
 import ru.practicum.models.enums.CommentState;
 
 import java.time.LocalDateTime;
